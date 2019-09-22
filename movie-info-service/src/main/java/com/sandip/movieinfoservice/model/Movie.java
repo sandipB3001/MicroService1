@@ -1,4 +1,4 @@
-package com.sandip.model;
+package com.sandip.movieinfoservice.model;
 
 public class Movie {
 
