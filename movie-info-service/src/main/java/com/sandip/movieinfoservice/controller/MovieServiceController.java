@@ -1,6 +1,7 @@
 package com.sandip.movieinfoservice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +17,7 @@ public class MovieServiceController {
 
 	@Autowired
 	private MovieService movieService;
-	@RequestMapping("/{movieId}")
+	@GetMapping("/{movieId}")
 	public Movie getMovieInfo(@PathVariable String movieId) {
 		return movieService.getMovieService(movieId);
 	}

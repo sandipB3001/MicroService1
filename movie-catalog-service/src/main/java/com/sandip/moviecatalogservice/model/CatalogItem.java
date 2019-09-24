@@ -1,4 +1,4 @@
-package com.sandip.model;
+package com.sandip.moviecatalogservice.model;
 
 public class CatalogItem {
 
@@ -32,5 +32,4 @@ public class CatalogItem {
 	public void setRating(int rating) {
 		this.rating = rating;
 	}
-	
 }
