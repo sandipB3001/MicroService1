@@ -12,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 import com.sandip.moviecatalogservice.model.CatalogItem;
 import com.sandip.moviecatalogservice.model.Movie;
 import com.sandip.moviecatalogservice.model.Rating;
+import com.sandip.moviecatalogservice.model.UserRating;
 
 @Service
 public class MovieCatalogServiceImpl implements MovieCatalogService{
@@ -20,24 +21,16 @@ public class MovieCatalogServiceImpl implements MovieCatalogService{
 	private RestTemplate restTemplate;
 	@Override
 	public List<CatalogItem> getMovieCatalog(String userId) {
-		//get all rated movie ids
 		
-		//for each movie id, call movie info service and get details
-		
-		//put them all together
-		List<Rating> ratings=Arrays.asList(
-				new Rating("1234",4),
-				new Rating("5678",5)
-				);
+		UserRating userRating=restTemplate.getForObject("http://localhost:8083/rating/user/"+userId,UserRating.class);
+		List<Rating> ratings=userRating.getUserRating();
 		//RestTemplate restTemplate=new RestTemplate();	//THIS RESTTEMPLATE IS USED FOR HITTING THE MOVIEINFO URL AND UNMARSHAL IT INTO MOVIE OBJECT
 		return ratings.stream().map(rating->{
 		Movie movie = restTemplate.getForObject("http://localhost:8082/movies/"+rating.getMovieId(), Movie.class);	
 		return new CatalogItem(movie.getName(),"Test",rating.getRating());
 		})
 		.collect(Collectors.toList());
-		/*return Collections.singletonList(
-				new CatalogItem("3 Idiots","Test",5)	
-			);*/
+		
 	}
 
 }
