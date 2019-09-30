@@ -22,11 +22,11 @@ public class MovieCatalogServiceImpl implements MovieCatalogService{
 	@Override
 	public List<CatalogItem> getMovieCatalog(String userId) {
 		
-		UserRating userRating=restTemplate.getForObject("http://localhost:8083/rating/user/"+userId,UserRating.class);
+		UserRating userRating=restTemplate.getForObject("http://rating-data-service/rating/user/"+userId,UserRating.class);
 		List<Rating> ratings=userRating.getUserRating();
 		//RestTemplate restTemplate=new RestTemplate();	//THIS RESTTEMPLATE IS USED FOR HITTING THE MOVIEINFO URL AND UNMARSHAL IT INTO MOVIE OBJECT
 		return ratings.stream().map(rating->{
-		Movie movie = restTemplate.getForObject("http://localhost:8082/movies/"+rating.getMovieId(), Movie.class);	
+		Movie movie = restTemplate.getForObject("http://movie-info-service/movies/"+rating.getMovieId(), Movie.class);	
 		return new CatalogItem(movie.getName(),"Test",rating.getRating());
 		})
 		.collect(Collectors.toList());
